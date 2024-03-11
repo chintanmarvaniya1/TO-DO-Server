@@ -1,14 +1,10 @@
 const express = require("express");
-
 const app = express();
+const TaskAPI = require("./routes/taskAPI");
 
 
 app.use(express.json());
-app.get("/home", async (req, res) => {
-    return res.status(500).json({
-      msg: "Its working",
-    });
-});
 
+app.use('/api/task',TaskAPI)
 
 module.exports = app;
