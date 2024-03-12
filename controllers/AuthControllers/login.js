@@ -35,7 +35,7 @@ const login = async (req, res) => {
       {
         id: isValidUser._id,
       },
-      "NVRIOVNIOVNWEIVNEOIVN",
+      process.env.JWT_TOKEN,
       { expiresIn: '10m' }
     );
 

@@ -1,11 +1,39 @@
-
+const TASK = require("../../models/TaskModel");
 
 const addTask = async (req, res) => {
-    return res.status(200).json({
-        success: true,
-        message: 'Task created!',
-
-    });
+    try {
+        const taskname = req.body.taskname;
+        if (!taskname) {
+            return res.status(400).json({
+                success: false,
+                message: 'Required fields are not supplied'
+            });
+        }
+        await TASK.create({
+            userID: req.currentUser._id,
+            taskname: taskname,
+            isCompleted: false
+        }).then((success) => {
+            return res.status(200).json({
+                success: true,
+                message: 'Task created!',
+                taskID: success.id
+            });
+        })
+        .catch((error) => {
+                return res.status(500).json({
+                    success: false,
+                    message: error.message,
+                    error: error
+                });
+            });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+            error: error
+        });
+    }
 }
 
 module.exports = addTask;
